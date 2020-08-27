@@ -1,22 +1,8 @@
-package com.tcasper.models
+package com.tcasper
 
-sealed trait Suit
-case object Clubs extends Suit
-case object Diamonds extends Suit
-case object Hearts extends Suit
-case object Spades extends Suit
+object TexasHoldemTests {
 
-case class Card(value: (Int, Char, Char))
-case class Hand(hand: (Card, Card)) {
-
-  def displayHand() = s"${hand._1.value._2}${hand._1.value._3}${hand._2.value._2}${hand._2.value._3}"
-}
-
-object HandRank extends Enumeration {
-  val StraightFlush, FourOfAKind, FullHouse, Flush, Straight, ThreeOfAKind, TwoPair, Pair, HighCard = Value
-}
-
-object TestCases {
+  // Testcases
   val suits = "c_h_d_s"
   val size7 = "2c3s4c5s6h 7d8h" // 7 singles
   val size6 = "2c2d3h4s5c 6s7h" // pair - 5 singles
@@ -44,7 +30,13 @@ object TestCases {
   val fourOfAKind2 = "2cKdJsKcKs 8sKh"
 
   val threeOfKind1 = "3h8cJs8s8h KhTc"
+  val threeOfKind2 = "4sAsAc5c7d 9hTh"
 
   val twoPair1 = "2hJc7s8c2s 6h7h"
-}
+  val twoPair2 = "9c8dAcKhQd KcQc"
 
+  val pair1 = "2h4h6c6d9s KsJh"
+
+  val highCard = "2h4d6s8cKc JdQh"
+
+}

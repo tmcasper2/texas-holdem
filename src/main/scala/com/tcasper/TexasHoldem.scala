@@ -1,8 +1,31 @@
 package com.tcasper
 
-import com.tcasper.models.{Card, Hand}
+object TexasHoldem extends App {
 
-object Main extends App {
+  final val cardValueMap = Map(
+    'A' -> 1,
+    '2' -> 2,
+    '3' -> 3,
+    '4' -> 4,
+    '5' -> 5,
+    '6' -> 6,
+    '7' -> 7,
+    '8' -> 8,
+    '9' -> 9,
+    'T' -> 10,
+    'J' -> 11,
+    'Q' -> 12,
+    'K' -> 13)
+
+  final val StraightFlush = 9
+  final val FourOfAKind = 8
+  final val FullHouse = 7
+  final val Flush = 6
+  final val Straight = 5
+  final val ThreeOfAKind = 4
+  final val TwoPair = 3
+  final val Pair = 2
+  final val HighCard = 1
 
   println("[Main with Card] --> Enter the given hand: ")
   val cardString = scala.io.StdIn.readLine()
@@ -83,7 +106,7 @@ object Main extends App {
         if (isFlush(ungrouped)) {
           (originalHand, Flush)
         }
-        if (groupedCards.head.length == 3) {
+        else if (groupedCards.head.length == 3) {
           (originalHand, ThreeOfAKind)
 
           // pair, pair, 3 singes
@@ -97,7 +120,7 @@ object Main extends App {
           (originalHand, Flush)
         }
         // 4 of a kind, 3 singles
-        if (groupedCards.head.length == 4) {
+        else if (groupedCards.head.length == 4) {
           (originalHand, FourOfAKind)
         }
 
@@ -117,7 +140,7 @@ object Main extends App {
           (originalHand, Flush)
         }
         // 4 of a kind, pair, single
-        if (groupedCards.head.length == 4) {
+        else if (groupedCards.head.length == 4) {
           (originalHand, FourOfAKind)
         }
 
@@ -162,7 +185,7 @@ object Main extends App {
     val grouped = cards.groupBy(_.value._3)
     println(s"#### Grouped = $grouped")
     val groupedListsOfSuits = grouped.values
-    println(s"#### Grouped list of suits = ${groupedListsOfSuits}")
+    println(s"#### Grouped list of suits = $groupedListsOfSuits")
     for (g <- groupedListsOfSuits) {
       if (g.length >= 5) {
         println(s"#### Found a group of 5 suits, returning true")
@@ -178,13 +201,6 @@ object Main extends App {
       isStraightWithAce(cards)
     } else {
       println("#### No ACES found, checking deck for straight...")
-      println(s"cards(0) = ${cards(0).value._1}")
-      println(s"cards(1) = ${cards(1).value._1}")
-      println(s"cards(2) = ${cards(2).value._1}")
-      println(s"cards(3) = ${cards(3).value._1}")
-      println(s"cards(4) = ${cards(4).value._1}")
-      println(s"cards(5) = ${cards(5).value._1}")
-      println(s"cards(6) = ${cards(6).value._1}")
       for (i <- 0 until 4) {
         println(s"iteration $i")
         if ((cards(i + 1).value._1 != cards(i).value._1 + 1) && (i > 2)) {
@@ -200,11 +216,6 @@ object Main extends App {
 
   def isStraightWithAce(cards: List[Card]): Boolean = {
     println("#### Contains an ACE...")
-    println(s"cards(0) = ${cards(0).value._1}")
-    println(s"cards(1) = ${cards(1).value._1}")
-    println(s"cards(2) = ${cards(2).value._1}")
-    println(s"cards(3) = ${cards(3).value._1}")
-    println(s"cards(4) = ${cards(4).value._1}")
     val bottomStraight = cards(1).value._1 == 2 && cards(2).value._1 == 3 && cards(3).value._1 == 4 && cards(4).value._1 == 5
     println("#### Bottom straight = " + bottomStraight)
     val topStraight = cards(3).value._1 == 10 && cards(4).value._1 == 11 && cards(5).value._1 == 12 && cards(6).value._1 == 13
@@ -249,29 +260,11 @@ object Main extends App {
       ) yield Hand(Card(cardValueMap(str.charAt(0)), str.charAt(0).toUpper, str.charAt(1)), Card(cardValueMap(str.charAt(2)), str.charAt(2).toUpper, str.charAt(3)))
     handsArray
   }
-
-  final val cardValueMap = Map(
-    'A' -> 1,
-    '2' -> 2,
-    '3' -> 3,
-    '4' -> 4,
-    '5' -> 5,
-    '6' -> 6,
-    '7' -> 7,
-    '8' -> 8,
-    '9' -> 9,
-    'T' -> 10,
-    'J' -> 11,
-    'Q' -> 12,
-    'K' -> 13)
-
-  final val StraightFlush = 9
-  final val FourOfAKind = 8
-  final val FullHouse = 7
-  final val Flush = 6
-  final val Straight = 5
-  final val ThreeOfAKind = 4
-  final val TwoPair = 3
-  final val Pair = 2
-  final val HighCard = 1
 }
+
+case class Card(value: (Int, Char, Char))
+case class Hand(hand: (Card, Card)) {
+  def displayHand() = s"${hand._1.value._2}${hand._1.value._3}${hand._2.value._2}${hand._2.value._3}"
+}
+
+
