@@ -47,7 +47,7 @@ object TexasHoldem extends App {
     for (hand <- handsArray) yield process(boardCardsArray, hand)
 
 
-  handsMap.sortBy(_._2).map(p => println(p._1.displayHand() + " rank = " + p._2))
+  //handsMap.sortBy(_._2).map(p => println(p._1.displayHand() + " rank = " + p._2))
   val sortedHandsMap = handsMap.sortBy(_._2)
   for (i <- sortedHandsMap.indices) {
     if (i != 0 && sortedHandsMap(i - 1)._2 == sortedHandsMap(i)._2) {
