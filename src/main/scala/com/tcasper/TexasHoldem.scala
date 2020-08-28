@@ -46,6 +46,16 @@ object TexasHoldem extends App {
   val handsMap =
     for (hand <- handsArray) yield process(boardCardsArray, hand)
 
+  /*
+  val groupedHandsMap = handsMap.groupBy(_._2)
+  val groupedHandsMapValuesList = groupedHandsMap.values.toList
+  var resultString: StringBuffer = new StringBuffer("")
+  for (i <- groupedHandsMapValuesList.indices) {
+    if (groupedHandsMapValuesList(i).length > 1) {
+      sortEquivalentHands(boardCardsArray, groupedHandsMapValuesList(i))
+    }
+  }
+  */
 
   //handsMap.sortBy(_._2).map(p => println(p._1.displayHand() + " rank = " + p._2))
   val sortedHandsMap = handsMap.sortBy(_._2)
@@ -57,6 +67,7 @@ object TexasHoldem extends App {
     }
   }
 
+  def sortEquivalentHands(boardCards: Array[Card], hands: Array[(Hand, Int)]): String = ???
 
   def process(boardCards: Array[Card], hand: Hand): (Hand, Int) = {
 
